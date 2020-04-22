@@ -15,49 +15,66 @@ void AVLTree::insert(int value)
 	insert(root, value);
 }
 
-void AVLTree::leftrotation(TreeAVLNode*& root)
+void AVLTree::deleted(int value)
 {
-	TreeAVLNode* node = new TreeAVLNode;
-	TreeAVLNode* aux = new TreeAVLNode;
-
-	node = root->left->right;
-	root->left->right = root;
-	root->left->equilibrium = 0;
-	aux = root->left;
-	root->left = node;
-	root->equilibrium = 0;
-	root = aux;
+	deleted(root, value);
 }
 
-void AVLTree::rightrotation(TreeAVLNode*& root)
+void AVLTree::leftRotation(TreeAVLNode*& root)
+{
+	TreeAVLNode* node;
+
+	node = root->right;
+	root->right = node->left;
+	node->left = root;
+
+	root->height = height(root);
+	root->equilibrium = equilibrium(root);
+
+	node->height = height(node);
+	node->equilibrium = equilibrium(node);
+
+	if (this->root == root) this->root = node;
+	else root = node;
+}
+
+void AVLTree::rightRotation(TreeAVLNode*& root)
 {
 	TreeAVLNode* node = new TreeAVLNode;
-	TreeAVLNode* aux = new TreeAVLNode;
+	
+	node = root->left;
+	root->left = node->right;
+	node->right = root;
 
-	node = root->right->left;
-	root->right->left = root;
-	root->right->equilibrium = 0;
-	aux = root->right;
-	root->right = node;
-	root->equilibrium = 0;
-	root = aux;
+	root->height = height(root);
+	root->equilibrium = equilibrium(root);
+
+	node->height = height(node);
+	node->equilibrium = equilibrium(node);
+
+	if (this->root == root) this->root = node;
+	else root = node;
 }
 
 void AVLTree::autobalance(TreeAVLNode*& root)
 {
 	if (root->equilibrium == 2) {
-		if (root->right->equilibrium < 0) {
-			rightrotation(root->right);
-			leftrotation(root);
-		}
-		else leftrotation(root);
+		leftRotation(root);
 	}
 	else if (root->equilibrium == -2) {
-		if (root->left->equilibrium > 0) {
-			leftrotation(root->left);
-			rightrotation(root);
+		rightRotation(root);
+	}
+}
+
+void AVLTree::deleted(TreeAVLNode*& root, int value)
+{
+	if (isEmpty()) std::string{ "Error: AVL Tree empty.\n " };
+	else {
+		if (value == root->data) {
+			delete root;
 		}
-		else rightrotation(root);
+		else if (root->left != nullptr) deleted(root->left, value);
+		else deleted(root->right, value);
 	}
 }
 
@@ -74,6 +91,11 @@ int AVLTree::height()
 int AVLTree::equilibrium(TreeAVLNode* root)
 {
 	return (height(root->right) - height(root->left));
+}
+
+int AVLTree::deleteMinimun(TreeAVLNode*& root)
+{
+	
 }
 
 bool AVLTree::isEmpty()
@@ -105,9 +127,9 @@ std::string AVLTree::print()
 {
 	std::stringstream ss;
 
-	ss << "Preorder: " << preorder(root);
-	ss << "Inorder: " << inorder(root);
-	ss << "Postorder: " << postorder(root);
+	ss << "Preorder: " << preorder(root) << "\n";
+	ss << "Inorder: " << inorder(root) << "\n";
+	ss << "Postorder: " << postorder(root) << "\n";
 	return ss.str();
 }
 
@@ -161,7 +183,7 @@ std::string AVLTree::preorder(TreeAVLNode* root)
 	std::stringstream ss;
 
 	if (root != nullptr) {
-		ss << root->data << preorder(root->left) << preorder(root->right) << "\n";
+		ss << root->data << " - " << preorder(root->left) << preorder(root->right);
 	}
 	return ss.str();
 }
@@ -171,7 +193,7 @@ std::string AVLTree::inorder(TreeAVLNode* root)
 	std::stringstream ss;
 
 	if (root != nullptr) {
-		ss << inorder(root->left) << root->data << preorder(root->right) << "\n";
+		ss << inorder(root->left) << root->data << " - " << preorder(root->right);
 	}
 	return ss.str();
 }
@@ -181,7 +203,7 @@ std::string AVLTree::postorder(TreeAVLNode* root)
 	std::stringstream ss;
 
 	if (root != nullptr) {
-		ss << postorder(root->left) << postorder(root->right) << root->data << "\n";
+		ss << postorder(root->left) << postorder(root->right) << root->data << " - ";
 	}
 	return ss.str();
 }
