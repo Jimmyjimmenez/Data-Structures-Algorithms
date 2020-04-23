@@ -73,5 +73,27 @@ void MinimumMounds::ascendentExchange(int father, int son)
 
 void MinimumMounds::descendentExchange(int father)
 {
+	int left = 2 * father + 1, right = 2 * father + 2;
 
+	if (left <= last) {
+		if (right <= last) {
+			if (priority[left] < priority[right]) {
+				if (priority[father] > priority[left]) {
+					exchange(father, left);
+					descendentExchange(left);
+				}
+			}
+			else {
+				if (priority[father] > priority[right]) {
+					exchange(father, right);
+					descendentExchange(right);
+				}
+			}
+		} else {
+			if (priority[father] > priority[left]) {
+				exchange(father, left);
+				descendentExchange(left);
+			}
+		}
+	}
 }

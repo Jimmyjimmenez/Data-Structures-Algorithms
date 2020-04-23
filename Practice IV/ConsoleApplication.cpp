@@ -1,6 +1,7 @@
 #include <iostream>
 #include "TreeAVLNode.h"
 #include "AVLTree.h"
+#include "MinimumMounds.h"
 
 int main() {
 
@@ -79,5 +80,52 @@ int main() {
 
 	std::cout << "\nFifth AVL Tree:\n" << fifthAVLTree.print();
 
+	fifthAVLTree.deleted(4);
+	std::cout << "\nDeleted node 4\n";
+	std::cout << fifthAVLTree.print();
+
+	fifthAVLTree.deleted(9);
+	std::cout << "\nDeleted node 9\n";
+	std::cout << fifthAVLTree.print();
+
+	fifthAVLTree.deleted(2);
+	std::cout << "\nDeleted node 2 \n";
+	std::cout << fifthAVLTree.print();
+
+	fifthAVLTree.deleted(0);
+	std::cout << "\nDeleted node 0 \n";
+	std::cout << fifthAVLTree.print();
+
+	fifthAVLTree.deleted(1);
+	std::cout << "\nDeleted node 1 \n";
+	std::cout << fifthAVLTree.print();
+
+	std::cout << "\nMinimum Mounds:\n";
+
+	MinimumMounds newMinimumMounds = MinimumMounds(50);
+
+	newMinimumMounds.insert(4);
+	newMinimumMounds.insert(5);
+	newMinimumMounds.insert(6);
+	newMinimumMounds.insert(3);
+	newMinimumMounds.insert(11);
+	newMinimumMounds.insert(7);
+	newMinimumMounds.insert(9);
+	newMinimumMounds.insert(14);
+	newMinimumMounds.insert(10);
+	newMinimumMounds.insert(8);
+
+	std::cout << newMinimumMounds.print();
+	std::cout << "\nInsert 2.\n";
+	newMinimumMounds.insert(2);
+	std::cout << newMinimumMounds.print();
+
+	int min = newMinimumMounds.deletedMinimum();
+
+	std::cout << "\nMinimum eliminated: " << min << "\n" << newMinimumMounds.print();
+
+	min = newMinimumMounds.deletedMinimum();
+
+	std::cout << "\nMinimum eliminated: " << min << "\n" << newMinimumMounds.print();
 	return 0;
 }

@@ -68,13 +68,26 @@ void AVLTree::autobalance(TreeAVLNode*& root)
 
 void AVLTree::deleted(TreeAVLNode*& root, int value)
 {
-	if (isEmpty()) std::string{ "Error: AVL Tree empty.\n " };
-	else {
-		if (value == root->data) {
-			delete root;
+	if (root != nullptr) {
+		if (value < root->data) deleted(root->left, value);
+		else {
+			if (value > root->data) deleted(root->right, value);
+			else {
+				if (root->left == nullptr && root->right == nullptr) root = nullptr;
+				else {
+					if (root->left == nullptr) root = root->right;
+					else {
+						if (root->right == nullptr) root = root->left;
+						else root->data = deleteMinimun(root->right);
+					}
+				}
+			}
 		}
-		else if (root->left != nullptr) deleted(root->left, value);
-		else deleted(root->right, value);
+	}
+	if (root != nullptr) {
+		root->height = height(root);
+		root->equilibrium = equilibrium(root);
+		if (abs(root->equilibrium) > 1) autobalance(root);
 	}
 }
 
@@ -95,7 +108,15 @@ int AVLTree::equilibrium(TreeAVLNode* root)
 
 int AVLTree::deleteMinimun(TreeAVLNode*& root)
 {
-	
+	int minimum;
+
+	if (root->left == nullptr) {
+		minimum = root->data;
+		root = root->right;
+	}
+	else minimum = deleteMinimun(root->left);
+
+	return minimum;
 }
 
 bool AVLTree::isEmpty()
