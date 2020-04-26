@@ -1,7 +1,7 @@
 #include <iostream>
 #include "TreeAVLNode.h"
 #include "AVLTree.h"
-#include "MinimumMounds.h"
+#include "MinimumHeaps.h"
 
 int main() {
 
@@ -102,30 +102,30 @@ int main() {
 
 	std::cout << "\nMinimum Mounds:\n";
 
-	MinimumMounds newMinimumMounds = MinimumMounds(50);
+	MinimumHeaps newMinimumHeaps = MinimumHeaps(50);
 
-	newMinimumMounds.insert(4);
-	newMinimumMounds.insert(5);
-	newMinimumMounds.insert(6);
-	newMinimumMounds.insert(3);
-	newMinimumMounds.insert(11);
-	newMinimumMounds.insert(7);
-	newMinimumMounds.insert(9);
-	newMinimumMounds.insert(14);
-	newMinimumMounds.insert(10);
-	newMinimumMounds.insert(8);
+	newMinimumHeaps.insert(4);
+	newMinimumHeaps.insert(5);
+	newMinimumHeaps.insert(6);
+	newMinimumHeaps.insert(3);
+	newMinimumHeaps.insert(11);
+	newMinimumHeaps.insert(7);
+	newMinimumHeaps.insert(9);
+	newMinimumHeaps.insert(14);
+	newMinimumHeaps.insert(10);
+	newMinimumHeaps.insert(8);
 
-	std::cout << newMinimumMounds.print();
+	std::cout << newMinimumHeaps.print();
 	std::cout << "\nInsert 2.\n";
-	newMinimumMounds.insert(2);
-	std::cout << newMinimumMounds.print();
+	newMinimumHeaps.insert(2);
+	std::cout << newMinimumHeaps.print();
 
-	int min = newMinimumMounds.deletedMinimum();
+	int min = newMinimumHeaps.deletedMinimum();
 
-	std::cout << "\nMinimum eliminated: " << min << "\n" << newMinimumMounds.print();
+	std::cout << "\nMinimum eliminated: " << min << "\n" << newMinimumHeaps.print();
 
-	min = newMinimumMounds.deletedMinimum();
+	min = newMinimumHeaps.deletedMinimum();
 
-	std::cout << "\nMinimum eliminated: " << min << "\n" << newMinimumMounds.print();
+	std::cout << "\nMinimum eliminated: " << min << "\n" << newMinimumHeaps.print();
 	return 0;
 }

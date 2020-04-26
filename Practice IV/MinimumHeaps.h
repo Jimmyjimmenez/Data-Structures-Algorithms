@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-class MinimumMounds
+class MinimumHeaps
 {
 public:
 
-	MinimumMounds(int);
-	~MinimumMounds();
+	MinimumHeaps(int);
+	~MinimumHeaps();
 
 	bool isEmpty();
 
