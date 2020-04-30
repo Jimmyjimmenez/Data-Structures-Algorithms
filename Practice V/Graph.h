@@ -3,6 +3,7 @@
 #include "Set.h"
 
 #include <string>
+#include <limits.h>
 
 class Graph
 {
@@ -28,7 +29,7 @@ private:
 	
 	static const int INFINITE = std::numeric_limits<unsigned short int>::max();
 
-	int vertices;
+	int vertex;
 	int** edge;
 
 	int vertexNotVisited(bool*, int);
